@@ -1,11 +1,10 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for, send_from_directory, current_app, Response
-from flask.ext.security import Security, SQLAlchemyUserDatastore, \
-    UserMixin, RoleMixin, login_required
 import sys
 import json
 import csv
 import platform
 import numpy
+from flask import send_file
 from numpy import genfromtxt
 
 app = Flask(__name__)
@@ -38,11 +37,23 @@ def train():
         data = request.get_json(force=True)
         return combine(data)
 
+@app.route("/sendPicture", methods=['GET'])
+
+def sendBack():
+    if request.method == 'GET':
+        return send_file("accel.png", mimetype="image/png")
+
+@app.route("/sendPictureTwo", methods=['GET'])
+
+def sendBackTwo():
+    if request.method == 'GET':
+        return send_file("angle.png", mimetype="image/png")
+
 @app.route("/gatherData", methods=['GET','POST'])
 
-def train():
-    if request.method == 'GET':
+def compare():
+    if request.method == 'POST':
         data = request.get_json(force=True)
-        return combine(data)  
+        return compare(data)
 if __name__ == "__main__":
     app.run(debug=True, threaded = True, port=9875)

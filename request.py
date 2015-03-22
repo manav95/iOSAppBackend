@@ -8,3 +8,6 @@ a = requests.get('http://127.0.0.1:9875/recordData')
 print a.text
 v = requests.get('http://127.0.0.1:9875/trainingData')
 print v.json
+v = requests.get('http://127.0.0.1:9875/sendPicture')
+print [method for method in dir(v) if callable(getattr(v, method))]
+file = v.read()
